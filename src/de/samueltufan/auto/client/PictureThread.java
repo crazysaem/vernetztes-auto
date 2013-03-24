@@ -35,22 +35,26 @@ public class PictureThread implements Runnable
 			Runtime rt = Runtime.getRuntime();		
 			try
 			{
+				System.out.println("Capturing picture...");
 				Process pr = rt.exec("fswebcam -r 1920x1080 output.jpg");
 				pr.waitFor();
+				System.out.println("Picture captured");
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
 			}
 			
-			File f = new File("src/output.jpg");
+			File f = new File("output.jpg");
 			
 			if (f.exists()) 
 			{
 				try
 				{
+					System.out.println("Converting picture");
 					byte[] b = FileHelper.loadFile(f);
 					//f.delete();
+					System.out.println("Sending picture to server to decode it");
 					String[] result = server.decodeQrCode(b);
 					
 					if (result != null)
@@ -58,7 +62,7 @@ public class PictureThread implements Runnable
 						QrCodeInfo qrCodeInfo = new QrCodeInfo();
 						qrCodeInfo.value = result[0];
 						qrCodeInfo.width = Integer.parseInt(result[1]);
-						qrCodeInfo.height = Integer.parseInt(result[2]);
+						qrCodeInfo.height = Integer.parseInt(result[2]);						
 						
 						System.out.println(count + " v:" + qrCodeInfo.value + " w:" + qrCodeInfo.width + " h:" + qrCodeInfo.height);
 					}

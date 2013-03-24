@@ -64,8 +64,8 @@ public class Server extends UnicastRemoteObject implements ServerInterface
     {
     	Server server = new Server();
         server.start();
-        Thread.sleep(5 * 60 * 1000); // run for 5 minutes
-        server.stop();
+        //Thread.sleep(5 * 60 * 1000); // run for 5 minutes
+        //server.stop();
     }
 
 	@Override
