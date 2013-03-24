@@ -26,12 +26,14 @@ public class PictureThread implements Runnable
 			//Wait 50 ms
 			try 
 			{
-	            Thread.sleep(50);
+	            Thread.sleep(1);
 	        } 
 			catch (InterruptedException ie) 
 	        {
 	            System.out.println("PictureThread interrupted! " + ie);
 	        }
+			
+			long startTime = System.currentTimeMillis();
 			
 			Runtime rt = Runtime.getRuntime();		
 			try
@@ -46,6 +48,8 @@ public class PictureThread implements Runnable
 				e.printStackTrace();
 			}
 			
+			long captureTime = System.currentTimeMillis();
+			
 			File f = new File("output.jpg");
 			
 			if (f.exists()) 
@@ -54,9 +58,11 @@ public class PictureThread implements Runnable
 				{
 					System.out.println("Converting picture");
 					byte[] b = FileHelper.loadFile(f);
+					long convertTime = System.currentTimeMillis();
 					//f.delete();
 					System.out.println("Sending picture to server to decode it");
 					String[] result = server.decodeQrCode(b);
+					long sendingTime = System.currentTimeMillis();
 					
 					if (result != null)
 					{
@@ -71,6 +77,14 @@ public class PictureThread implements Runnable
 					{
 						System.out.println(count + " DECODING ERROR");
 					}
+					
+					long end = System.currentTimeMillis();
+					
+					System.out.println("-------TIME-------");
+					System.out.println("CAPTURING PICTURE "+(captureTime-startTime)+" ms.");
+					System.out.println("CONVERTING PICTURE "+(convertTime-captureTime)+" ms.");
+					System.out.println("SENDING PICTURE "+(sendingTime-convertTime)+" ms.");
+					System.out.println("TOTAL "+(end-startTime)+" ms.");
 				}
 				catch (IOException e)
 				{
