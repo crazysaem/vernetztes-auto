@@ -51,7 +51,7 @@ public class QRCodeHelper
 			
 			if (image != null)
 			{		
-				BufferedImageUtils.writeBufferedImage(image, "src/upload/" + imgCount + "crop.jpg");
+				//BufferedImageUtils.writeBufferedImage(image, "src/upload/" + imgCount + "crop.jpg");
 		
 				qrCodeInfo = decodeQrCode(image);
 			}

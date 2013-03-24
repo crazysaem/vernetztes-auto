@@ -12,6 +12,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import javax.imageio.ImageIO;
 
+import de.samueltufan.auto.misc.FileHelper;
 import de.samueltufan.auto.qrdecoder.QRCodeHelper;
 import de.samueltufan.auto.qrdecoder.QrCodeInfo;
 
@@ -25,10 +26,9 @@ public class Server extends UnicastRemoteObject implements ServerInterface
 	}
 	
 	public void start() throws Exception 
-	{
-	    rmiRegistry = LocateRegistry.createRegistry(1099);
+	{		
+	    rmiRegistry = LocateRegistry.createRegistry(1099);	    
 	    rmiRegistry.bind("server", this);
-	    System.out.println("Server started");
 	}
 	public void stop() throws Exception 
 	{
@@ -62,6 +62,10 @@ public class Server extends UnicastRemoteObject implements ServerInterface
         
     public static void main(String[] args) throws Exception 
     {
+    	String ip = FileHelper.readFile("src/server-ip.txt");		
+    	System.setProperty("java.rmi.server.hostname", ip);
+    	System.out.println("!Server started on " + System.getProperty("java.rmi.server.hostname"));
+    	
     	Server server = new Server();
         server.start();
         //Thread.sleep(5 * 60 * 1000); // run for 5 minutes
@@ -71,6 +75,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface
 	@Override
 	public String[] decodeQrCode(byte[] b) throws RemoteException
 	{
+		System.out.println("Incoming Picture!");
 		QrCodeInfo qrCodeInfo =  QRCodeHelper.decodeQRTag(b);
 		
 		if (qrCodeInfo == null)

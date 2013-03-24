@@ -6,10 +6,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.DataBufferByte;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import org.imgscalr.Scalr;
 
@@ -51,7 +48,7 @@ public class LocateQrCode
 		if (DEBUG)
 		{
 			g.dispose();
-
+			/*
 			try
 			{
 				ImageIO.write(debugImage, "PNG", f);
@@ -59,7 +56,7 @@ public class LocateQrCode
 			catch (IOException e)
 			{
 				e.printStackTrace();
-			}
+			}*/
 		}
 		
 		if (r != null)

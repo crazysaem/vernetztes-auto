@@ -3,6 +3,7 @@ package de.samueltufan.auto.client;
 import java.io.File;
 import java.io.IOException;
 
+import de.samueltufan.auto.misc.FileHelper;
 import de.samueltufan.auto.qrdecoder.QrCodeInfo;
 import de.samueltufan.auto.server.ServerInterface;
 
